@@ -11,7 +11,7 @@ export class unSdg extends DDDSuper(LitElement) {
   constructor() {
     super();
     this.goal = "circle";
-    this.imgSrc = "./lib/svgs/circle.png";
+    this.imgSrc = new URL(`../lib/svgs/circle.png`, import.meta.url).href;
     this.width = "254px";
     this.height = "254px";
     this.label = "";
@@ -47,9 +47,7 @@ export class unSdg extends DDDSuper(LitElement) {
         font-family: var(--ddd-font-navigation);
         font-size: var(--un-sdg-font-size, var(--ddd-font-size-s));
         */
-        width: var(--width, 254px);
-        height: var(--height, 254px);
-        background-color: white;
+       
         --un-sdg-goal-1: rgb(235, 28, 44);
         --un-sdg-goal-2: rgb(210, 160, 42);
         --un-sdg-goal-3: rgb(44, 155, 72);
@@ -92,17 +90,10 @@ export class unSdg extends DDDSuper(LitElement) {
     }
   }
    
-  updateColor() { 
-    
-      const goal = this.getAttribute('goal'); 
-      if (goal >= 1 && goal <= 17) {
-          this.style.setProperty('background-color', `var(--un-sdg-goal-${this.goal}, white)`);
-      }
-  
-  }
+ 
   updateAlt() {
     const goal = this.getAttribute('goal');
-    const goalLabels = {
+    const labels = {
         'circle': "Sustainable developments logo",
         'all': "Goal 1: No poverty, Goal 2: Zero hunger, Goal 3: Good health and well-being, Goal 4: Quality education, Goal 5: Gender equality, Goal 6: Clean water and sanitation, Goal 7: Affordable and clean energy, Goal 8: Decent work and economic growth, Goal 9: Industry, innovation and infrastructure, Goal 10: Reduced inequalities, Goal 11: Sustainable cities and communities, Goal 12: Responsible consumption and production, Goal 13: Climate action, Goal 14: Life below water, Goal 15: Life on land, Goal 16: Peace, justice and strong institutions, Goal 17: Partnerships for the goals",
         '1': "Goal 1: No poverty",
@@ -123,7 +114,7 @@ export class unSdg extends DDDSuper(LitElement) {
         '16': "Goal 16: Peace, justice and strong institutions",
         '17': "Goal 17: Partnerships for the goals"
     };
-    this.label = goalLabels[goal] || "";
+    this.label = labels[goal] || "";
 }
 
 
@@ -131,7 +122,7 @@ export class unSdg extends DDDSuper(LitElement) {
   // class="${this.isImageVisible ? valueIfTrue : valueIfFalse}"
   
   render() {
-    let imgSrc = new URL(`../lib/svgs/goal-${this.goal}.svg`, import.meta.url).href;
+    let imgSrc = new URL(`../lib/svgs/${this.goal}.svg`,import.meta.url).href;
     // If the goal is all, set it to the all svg
     if (this.goal === 'all') {
       imgSrc = new URL(`../lib/svgs/${this.goal}.svg`, import.meta.url).href;
@@ -143,14 +134,13 @@ export class unSdg extends DDDSuper(LitElement) {
     return html`
     <style>
       :host {
-        --width: ${this.width};
-        --height: ${this.height};
+        --un-sdg-width: ${this.width};
+        --un-sdg-height: ${this.height};
       }
     </style>
-      <div class="svg-wrapper">
-      style="background-color: var(--un-sdg-goal-${this.goal});"
+      <div class="svg-wrapper" style="background-color: var(--un-sdg-goal-${this.goal})">
         <!-- Ternary. Only run <img/> if this.isImageVisible is true -->
-        ${this.colorOnly ? html `
+        ${this.isImageVisible ? html `
           <img 
           src="${this.imgSrc}"
           alt="${this.label}"
@@ -166,7 +156,7 @@ export class unSdg extends DDDSuper(LitElement) {
    * haxProperties integration via file reference
    */
   static get haxProperties() {
-    return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url)
+    return new URL(`../lib/${this.tag}.haxProperties.json`, import.meta.url)
       .href;
   }
 }
