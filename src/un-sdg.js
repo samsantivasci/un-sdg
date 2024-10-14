@@ -7,7 +7,7 @@ export class unSdg extends DDDSuper(LitElement) {
     return "un-sdg";
   }
 
-  // sets default variables
+  // sets default variables 
   constructor() {
     super();
     this.goal = "circle";
@@ -41,13 +41,7 @@ export class unSdg extends DDDSuper(LitElement) {
     css`
       :host {
         display: block;
-        /*
-        color: var(--ddd-theme-primary);
-        background-color: var(--ddd-theme-accent);
-        font-family: var(--ddd-font-navigation);
-        font-size: var(--un-sdg-font-size, var(--ddd-font-size-s));
-        */
-       
+       // defined custom properties such as the color associated with each goal 
         --un-sdg-goal-1: rgb(235, 28, 44);
         --un-sdg-goal-2: rgb(210, 160, 42);
         --un-sdg-goal-3: rgb(44, 155, 72);
@@ -65,7 +59,7 @@ export class unSdg extends DDDSuper(LitElement) {
         --un-sdg-goal-15: rgb(63, 175, 73);
         --un-sdg-goal-16: rgb(1, 85, 138);
         --un-sdg-goal-17: rgb(25, 54, 103);
-
+        // set the width and height of these properties 
         display: inline-block;
         width: var(--width, 254px);
         height: var(--height, 254px);
@@ -82,10 +76,7 @@ export class unSdg extends DDDSuper(LitElement) {
       }
     `];
   }
-  // When a value changes, this function runs
- 
-   
- 
+// suppose to set a label to each goal but it is not working. 
   updateAlt() {
     const label = {
         'circle': "Sustainable developments logo",
@@ -111,15 +102,12 @@ export class unSdg extends DDDSuper(LitElement) {
     return label;
     
 }
+//returns the URL of the svg image file of the specific goal 
 getImgSrc()
 {
   let imgSrc = new URL(`../lib/svgs/${this.goal}.svg`,import.meta.url).href;
   return imgSrc;
 }
-
-  // class="${this.isImageVisible ? '' : 'hidden'}"
-  // class="${this.isImageVisible ? valueIfTrue : valueIfFalse}"
-  
   render() {
     let imgSrc = new URL(`../lib/svgs/${this.goal}.svg`,import.meta.url).href;
     // If the goal is all, set it to the all svg
@@ -144,7 +132,6 @@ getImgSrc()
       </div>
     `;
   }
-
   /**
    * haxProperties integration via file reference
    */
@@ -153,6 +140,4 @@ getImgSrc()
       .href;
   }
 }
-
-
 globalThis.customElements.define(unSdg.tag, unSdg);
