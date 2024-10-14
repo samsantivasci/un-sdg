@@ -66,11 +66,10 @@ export class unSdg extends DDDSuper(LitElement) {
         --un-sdg-goal-16: rgb(1, 85, 138);
         --un-sdg-goal-17: rgb(25, 54, 103);
 
-        display: block;
+        display: inline-block;
         width: var(--width, 254px);
         height: var(--height, 254px);
       }
-    
       .svg-wrapper {
         width: var(--width, 254px);
         height: var(--height, 254px);
@@ -84,16 +83,11 @@ export class unSdg extends DDDSuper(LitElement) {
     `];
   }
   // When a value changes, this function runs
-  updated(changedProperties) {
-    if (changedProperties.has('goal')) {
-      this.updateAlt();
-    }
-  }
+ 
    
  
   updateAlt() {
-    const goal = this.getAttribute('goal');
-    const labels = {
+    const label = {
         'circle': "Sustainable developments logo",
         'all': "Goal 1: No poverty, Goal 2: Zero hunger, Goal 3: Good health and well-being, Goal 4: Quality education, Goal 5: Gender equality, Goal 6: Clean water and sanitation, Goal 7: Affordable and clean energy, Goal 8: Decent work and economic growth, Goal 9: Industry, innovation and infrastructure, Goal 10: Reduced inequalities, Goal 11: Sustainable cities and communities, Goal 12: Responsible consumption and production, Goal 13: Climate action, Goal 14: Life below water, Goal 15: Life on land, Goal 16: Peace, justice and strong institutions, Goal 17: Partnerships for the goals",
         '1': "Goal 1: No poverty",
@@ -114,9 +108,14 @@ export class unSdg extends DDDSuper(LitElement) {
         '16': "Goal 16: Peace, justice and strong institutions",
         '17': "Goal 17: Partnerships for the goals"
     };
-    this.label = labels[goal] || "";
+    return label;
+    
 }
-
+getImgSrc()
+{
+  let imgSrc = new URL(`../lib/svgs/${this.goal}.svg`,import.meta.url).href;
+  return imgSrc;
+}
 
   // class="${this.isImageVisible ? '' : 'hidden'}"
   // class="${this.isImageVisible ? valueIfTrue : valueIfFalse}"
@@ -132,12 +131,6 @@ export class unSdg extends DDDSuper(LitElement) {
       imgSrc = new URL(`../lib/svgs/${this.goal}.png`, import.meta.url).href;
     }
     return html`
-    <style>
-      :host {
-        --un-sdg-width: ${this.width};
-        --un-sdg-height: ${this.height};
-      }
-    </style>
       <div class="svg-wrapper" style="background-color: var(--un-sdg-goal-${this.goal})">
         <!-- Ternary. Only run <img/> if this.isImageVisible is true -->
         ${this.isImageVisible ? html `
