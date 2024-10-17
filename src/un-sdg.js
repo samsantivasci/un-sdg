@@ -17,7 +17,9 @@ export class unSdg extends DDDSuper(LitElement) {
     this.label = "";
     this.loading = "lazy";
     this.fetchPriority = "low";
-    this.colorOnly = "false";
+    this.colorOnly = false;
+    this.isImageVisible = true;
+    this.color= ""
   }
 
   // sets variable types
@@ -31,7 +33,8 @@ export class unSdg extends DDDSuper(LitElement) {
       loading: { type: String, reflect: true},
       fetchPriority: { type: String, reflect: true},
       colorOnly: { type: Boolean },
-      isImageVisible: { type: String },
+      isImageVisible: { type: Boolean },
+      color: {type: String}
     };
   }
 
@@ -77,39 +80,33 @@ export class unSdg extends DDDSuper(LitElement) {
     `];
   }
 // suppose to set a label to each goal but it is not working. 
-  updateAlt() {
-    const label = {
-        'circle': "Sustainable developments logo",
-        'all': "Goal 1: No poverty, Goal 2: Zero hunger, Goal 3: Good health and well-being, Goal 4: Quality education, Goal 5: Gender equality, Goal 6: Clean water and sanitation, Goal 7: Affordable and clean energy, Goal 8: Decent work and economic growth, Goal 9: Industry, innovation and infrastructure, Goal 10: Reduced inequalities, Goal 11: Sustainable cities and communities, Goal 12: Responsible consumption and production, Goal 13: Climate action, Goal 14: Life below water, Goal 15: Life on land, Goal 16: Peace, justice and strong institutions, Goal 17: Partnerships for the goals",
-        '1': "Goal 1: No poverty",
-        '2': "Goal 2: Zero hunger",
-        '3': "Goal 3: Good health and well-being",
-        '4': "Goal 4: Quality education",
-        '5': "Goal 5: Gender equality",
-        '6': "Goal 6: Clean water and sanitation",
-        '7': "Goal 7: Affordable and clean energy",
-        '8': "Goal 8: Decent work and economic growth",
-        '9': "Goal 9: Industry, innovation and infrastructure",
-        '10': "Goal 10: Reduced inequalities",
-        '11': "Goal 11: Sustainable cities and communities",
-        '12': "Goal 12: Responsible consumption and production",
-        '13': "Goal 13: Climate action",
-        '14': "Goal 14: Life below water",
-        '15': "Goal 15: Life on land",
-        '16': "Goal 16: Peace, justice and strong institutions",
-        '17': "Goal 17: Partnerships for the goals"
-    };
-    return label;
-    
+updateLabel() {
+  const label = {
+      'circle': "Sustainable developments logo",
+      'all': "Goal 1: No poverty, Goal 2: Zero hunger, Goal 3: Good health and well-being, Goal 4: Quality education, Goal 5: Gender equality, Goal 6: Clean water and sanitation, Goal 7: Affordable and clean energy, Goal 8: Decent work and economic growth, Goal 9: Industry, innovation and infrastructure, Goal 10: Reduced inequalities, Goal 11: Sustainable cities and communities, Goal 12: Responsible consumption and production, Goal 13: Climate action, Goal 14: Life below water, Goal 15: Life on land, Goal 16: Peace, justice and strong institutions, Goal 17: Partnerships for the goals",
+      '1': "Goal 1: No poverty",
+      '2': "Goal 2: Zero hunger",
+      '3': "Goal 3: Good health and well-being",
+      '4': "Goal 4: Quality education",
+      '5': "Goal 5: Gender equality",
+      '6': "Goal 6: Clean water and sanitation",
+      '7': "Goal 7: Affordable and clean energy",
+      '8': "Goal 8: Decent work and economic growth",
+      '9': "Goal 9: Industry, innovation and infrastructure",
+      '10':"Goal 10: Reduced inequalities",
+      '11': "Goal 11: Sustainable cities and communities",
+      '12': "Goal 12: Responsible consumption and production",
+      '13': "Goal 13: Climate action",
+      '14': "Goal 14: Life below water",
+      '15': "Goal 15: Life on land",
+      '16': "Goal 16: Peace, justice and strong institutions",
+      '17': "Goal 17: Partnerships for the goals"
+  };
+  return label;
 }
 //returns the URL of the svg image file of the specific goal 
-getImgSrc()
-{
-  let imgSrc = new URL(`../lib/svgs/${this.goal}.svg`,import.meta.url).href;
-  return imgSrc;
-}
   render() {
-    let imgSrc = new URL(`../lib/svgs/${this.goal}.svg`,import.meta.url).href;
+    let imgSrc = new URL(`../lib/svgs/goal-${this.goal}.svg`,import.meta.url).href;
     // If the goal is all, set it to the all svg
     if (this.goal === 'all') {
       imgSrc = new URL(`../lib/svgs/${this.goal}.svg`, import.meta.url).href;
@@ -121,9 +118,9 @@ getImgSrc()
     return html`
       <div class="svg-wrapper" style="background-color: var(--un-sdg-goal-${this.goal})">
         <!-- Ternary. Only run <img/> if this.isImageVisible is true -->
-        ${this.isImageVisible ? html `
+        ${!this.colorOnly ? html `
           <img 
-          src="${this.imgSrc}"
+          src="${imgSrc}"
           alt="${this.label}"
           loading="${this.loading}"
           fetchpriority="${this.fetchPriority}"
