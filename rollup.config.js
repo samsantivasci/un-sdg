@@ -25,7 +25,7 @@ export default {
     nodeResolve(),
     copy({
       targets: [
-        { src: 'lib/', dest: 'dist' }
+        { src: 'lib/', dest: 'public' }
       ]
     }),
     /** Minify JS, compile JS to a lower language target */
