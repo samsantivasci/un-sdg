@@ -40,7 +40,7 @@ export class unSdg extends DDDSuper(LitElement) {
     return [super.styles,
     css`
       :host {
-        display: block;
+        display: inline-block;
        // defined custom properties such as the color associated with each goal 
         --un-sdg-goal-1: rgb(235, 28, 44);
         --un-sdg-goal-2: rgb(210, 160, 42);
